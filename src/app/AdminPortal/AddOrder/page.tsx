@@ -9,7 +9,7 @@ const AddOrder = () => {
 
   return (
     <DataForm<Orders>
-      title="Add Order"
+      title="Add Orders"
       formFields={formFields}
       onSubmit={handleSubmit}
     />
