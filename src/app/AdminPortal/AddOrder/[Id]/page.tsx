@@ -12,6 +12,12 @@ const AddOrder = () => {
       title="Add Order"
       formFields={formFields}
       onSubmit={handleSubmit}
+      defaultValues={{
+        username: "",
+        quantity: "",
+        productName: "",
+        date: "",
+      }}
     />
   );
 };

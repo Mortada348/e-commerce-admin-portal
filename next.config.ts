@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/",
-        destination: "/AdminPortal/Dashboard",
+        destination: "/Auth/Login",
         permanent: false,
       },
     ];

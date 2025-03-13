@@ -3,15 +3,11 @@
 import { DataTable } from "@/app/components/Table";
 import React, { useState } from "react";
 import { useOrderManagement } from "./useOrderManagement";
-import { Button } from "@/components/ui/button";
-import { PlusCircle, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import GridHeader from "@/app/components/GridHeader";
 
-const ProductManagement = () => {
+const OrderManagement = () => {
   const { orders, orderColumns, handleEditOrder, handleDeleteOrder } =
     useOrderManagement();
-  const [search, setSearch] = useState("");
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
@@ -22,7 +18,7 @@ const ProductManagement = () => {
           AddPath={"../AdminPortal/AddOrder"}
         />
 
-        <div className="border rounded-md shadow-sm">
+        <div className="border rounded-lg shadow-sm">
           <DataTable
             data={orders}
             columns={orderColumns}
@@ -39,4 +35,4 @@ const ProductManagement = () => {
   );
 };
 
-export default ProductManagement;
+export default OrderManagement;

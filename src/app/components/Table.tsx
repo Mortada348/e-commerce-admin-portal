@@ -131,7 +131,7 @@ export function DataTable<T extends { id: number }>({
                             <DialogFooter>
                               <Button
                                 variant="outline"
-                                onClick={() => setDeleteId(null)} // Closes dialog
+                                onClick={() => setDeleteId(null)}
                               >
                                 Cancel
                               </Button>
@@ -140,7 +140,7 @@ export function DataTable<T extends { id: number }>({
                                 onClick={() => {
                                   if (deleteId !== null) {
                                     onDelete(deleteId);
-                                    setDeleteId(null); // Close dialog after deleting
+                                    setDeleteId(null);
                                   }
                                 }}
                               >

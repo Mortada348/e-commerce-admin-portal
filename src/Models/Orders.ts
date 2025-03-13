@@ -1,7 +1,7 @@
 export interface Orders {
   id: number;
   username: string;
-  quantity: number;
+  quantity: string | number;
   productName: string;
   date: string;
 }

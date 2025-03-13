@@ -9,14 +9,17 @@ const EditProfile = () => {
     {
       name: "username",
       label: "Username",
+      validationRules: { required: "username is required" },
     },
     {
       name: "email",
       label: "Email",
+      validationRules: { required: "email is required" },
     },
     {
       name: "password",
       label: "Password",
+      validationRules: { required: "password is required" },
     },
     {
       name: "birthdate",
@@ -24,13 +27,19 @@ const EditProfile = () => {
     },
   ];
   const handleSubmit = (data: Admin) => {
-    console.log("Order Submitted:", data);
+    console.log("Admin Submitted:", data);
   };
   return (
     <DataForm<Admin>
-      title="Edit Your Profile"
+      title="Edit Profile"
       formFields={formFields}
       onSubmit={handleSubmit}
+      defaultValues={{
+        username: "",
+        birthdate: "",
+        email: "",
+        password: "",
+      }}
     />
   );
 };

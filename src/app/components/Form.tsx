@@ -16,28 +16,28 @@ import { useRouter } from "next/navigation";
 interface Field {
   name: string;
   label: string;
-  type?: string; // Default: "text"
+  type?: string;
   placeholder?: string;
   description?: string;
-  validationRules?: Record<string, any>; // Custom validation rules
+  validationRules?: Record<string, any>;
 }
 
 interface DataFormProps<T> {
   title: string;
   formFields: Field[];
   onSubmit: (data: T) => void;
-  defaultValues?: Partial<T>; // Allow optional initial values
+  defaultValues?: Partial<T>;
 }
 
 const DataForm = <T extends Record<string, any>>({
   title,
   formFields,
   onSubmit,
-  defaultValues = {}, // Default to an empty object
+  defaultValues = {},
 }: DataFormProps<T>) => {
   const form = useForm<T>({
     mode: "onBlur",
-    defaultValues: defaultValues as DefaultValues<T>, // Use defaultValues from props
+    defaultValues: defaultValues as DefaultValues<T>,
   });
   const router = useRouter();
   return (
@@ -84,7 +84,7 @@ const DataForm = <T extends Record<string, any>>({
           <div className="flex justify-between">
             <Button
               type="button"
-              onClick={() => router.back()} // Navigate back
+              onClick={() => router.back()}
               className="px-6 py-3 bg-gray-500 text-white font-semibold rounded-md shadow-md hover:bg-gray-600 transition duration-200"
             >
               Cancel

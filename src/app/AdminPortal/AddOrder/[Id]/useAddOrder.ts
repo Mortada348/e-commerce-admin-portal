@@ -7,18 +7,21 @@ export const useAddOrder = () => {
       label: "Username",
       placeholder: "Enter the username",
       description: "Enter the name of the client.",
+      validationRules: { required: "username is required" },
     },
     {
       name: "quantity",
       label: "Quantity",
       type: "number",
       placeholder: "Enter the quantity",
+      validationRules: { required: "quantity is required" },
     },
     {
       name: "productName",
       label: "Product Name",
       placeholder: "Enter product name",
       description: "Set the name of the product.",
+      validationRules: { required: "Product name is required" },
     },
     {
       name: "date",

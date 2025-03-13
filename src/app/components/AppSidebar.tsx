@@ -1,4 +1,5 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+"use client";
+import { Calendar, Home, Inbox } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -11,12 +12,12 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
+
+import { useRouter } from "next/navigation";
 
 const items = [
   { title: "Dashboard", url: "/AdminPortal/Dashboard", icon: Home },
@@ -33,6 +34,8 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const router = useRouter();
+
   return (
     <Sidebar className="w-78 min-h-screen bg-white shadow-xl border-r border-gray-300">
       <SidebarContent className="p-6">

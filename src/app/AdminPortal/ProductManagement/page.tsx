@@ -3,7 +3,7 @@
 import { DataTable } from "@/app/components/Table";
 import React from "react";
 import { useProductManagement } from "./useProductManagement";
-import { PlusCircle } from "lucide-react";
+
 import GridHeader from "@/app/components/GridHeader";
 
 const ProductManagement = () => {
@@ -12,17 +12,14 @@ const ProductManagement = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-6xl mx-auto bg-white shadow-md rounded-lg p-6">
-        {/* Header Section */}
-
+      <div className="max-w-7xl mx-auto bg-white shadow-md rounded-lg p-6">
         <GridHeader
           GridTitle={"Manage Products"}
           AddTitle={"Add Product"}
           AddPath={"../AdminPortal/AddProduct"}
         />
 
-        {/* Data Table */}
-        <div className="border rounded-md shadow-sm">
+        <div className="border rounded-lg shadow-sm">
           <DataTable
             data={products}
             columns={productColumns}
