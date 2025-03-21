@@ -1,6 +1,23 @@
-import { Product } from "@/Models/Product";
+import { Product } from "@/objects/Product";
+import {
+  useCreateProductMutation,
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+} from "@/redux/services/productApi";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const useAddProduct = () => {
+  const { Id } = useParams();
+  const router = useRouter();
+  const productId = Number(Id);
+  const [createProduct, isCreateLoading] = useCreateProductMutation();
+  const [updateProduct, isUpdateLoading] = useUpdateProductMutation();
+
+  const { data: productData, isLoading } = useGetProductByIdQuery(productId, {
+    skip: productId === 0,
+  });
+
   const formFields = [
     {
       name: "name",
@@ -41,28 +58,43 @@ export const useAddProduct = () => {
       },
     },
     {
-      name: "category",
+      name: "categoryName",
       label: "Category",
       placeholder: "Enter the category of the product",
     },
-    {
-      name: "imageUrl",
-      label: "Image URL",
-      placeholder: "Enter the URL of the image",
-      validationRules: {
-        pattern: {
-          value: /^https?:\/\/.*\.(jpg|jpeg|png)$/,
-          message: "Invalid image URL",
-        },
-      },
-    },
   ];
-  const handleSubmit = (data: Product) => {
-    console.log("Order Submitted:", data);
+
+  const handleSubmit = async (data: Product) => {
+    const transformedData = {
+      ...data,
+      price: parseInt(data.price as string, 10),
+      stock: parseInt(data.stock as string, 10),
+
+      isDeleted: false,
+    };
+
+    const cleanedData = Object.fromEntries(
+      Object.entries(transformedData).filter(
+        ([_, value]) => value !== undefined
+      )
+    );
+
+    if (productId > 0) {
+      await updateProduct({ id: productId, updatedProduct: data });
+    } else {
+      await createProduct(cleanedData);
+    }
+    if (isCreateLoading || isUpdateLoading) {
+      router.back();
+    }
   };
 
   return {
     formFields,
     handleSubmit,
+    productData,
+    productId,
+    isLoading,
+    isCreateLoading,
   };
 };

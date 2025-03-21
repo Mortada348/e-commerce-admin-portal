@@ -1,6 +1,6 @@
 export interface Admin {
   id: number;
-  username: string;
+  usename: string;
   birthdate: string;
   email: string;
   password: string;

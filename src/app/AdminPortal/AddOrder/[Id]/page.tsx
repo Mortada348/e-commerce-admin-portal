@@ -1,23 +1,39 @@
 "use client";
 
 import DataForm from "@/app/components/Form";
-import { Orders } from "@/Models/Orders";
+import { Orders } from "@/objects/Orders";
 import { useAddOrder } from "./useAddOrder";
 
 const AddOrder = () => {
-  const { formFields, handleSubmit } = useAddOrder();
-
+  const {
+    orderId,
+    formFields,
+    handleSubmit,
+    orderData,
+    isLoading,
+    isCreateLoading,
+  } = useAddOrder();
   return (
     <DataForm<Orders>
-      title="Add Order"
+      title={orderId > 0 ? "Edit Order" : "Add Order"}
       formFields={formFields}
       onSubmit={handleSubmit}
-      defaultValues={{
-        username: "",
-        quantity: "",
-        productName: "",
-        date: "",
-      }}
+      isLoading={isLoading}
+      defaultValues={
+        orderId > 0 && orderData
+          ? {
+              username: orderData.username || "",
+              quantity: orderData.quantity || "",
+              productName: orderData.productName || "",
+              date: orderData.date || "",
+            }
+          : {
+              username: "",
+              quantity: "",
+              productName: "",
+              date: "",
+            }
+      }
     />
   );
 };

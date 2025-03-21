@@ -36,6 +36,11 @@ const items = [
 export function AppSidebar() {
   const router = useRouter();
 
+  const handleLogout = () => {
+    router.push("/Auth/Login");
+    localStorage.removeItem("token");
+  };
+
   return (
     <Sidebar className="w-78 min-h-screen bg-white shadow-xl border-r border-gray-300">
       <SidebarContent className="p-6">
@@ -79,11 +84,11 @@ export function AppSidebar() {
                   className="  w-full bg-white text-black border border-gray-300 shadow-lg rounded-md mt-2"
                 >
                   <DropdownMenuItem className="p-4 text-lg hover:bg-gray-200 cursor-pointer">
-                    <a href="/AdminPortal/EditProfile">Account</a>
+                    <a href="/AdminPortal/EditProfile/1">Account</a>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem className="p-4 text-lg hover:bg-gray-200 cursor-pointer text-red-500 font-bold">
-                    <a href="../Auth/Login">Sign out</a>
+                    <a onClick={handleLogout}>Sign out</a>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

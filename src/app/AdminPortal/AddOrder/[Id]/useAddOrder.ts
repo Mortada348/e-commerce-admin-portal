@@ -1,6 +1,22 @@
-import { Orders } from "@/Models/Orders";
+import { Orders } from "@/objects/Orders";
+import {
+  useCreateOrderMutation,
+  useGetOrderByIdQuery,
+  useUpdateOrderMutation,
+} from "@/redux/services/orderApi";
+
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const useAddOrder = () => {
+  const { Id } = useParams();
+  const router = useRouter();
+  const orderId = Number(Id);
+  const [createOrder, isCreateLoading] = useCreateOrderMutation();
+  const [updateOrder, isUpdateLoading] = useUpdateOrderMutation();
+  const { data: orderData, isLoading } = useGetOrderByIdQuery(orderId, {
+    skip: orderId === 0,
+  });
   const formFields = [
     {
       name: "username",
@@ -19,6 +35,7 @@ export const useAddOrder = () => {
     {
       name: "productName",
       label: "Product Name",
+
       placeholder: "Enter product name",
       description: "Set the name of the product.",
       validationRules: { required: "Product name is required" },
@@ -32,12 +49,35 @@ export const useAddOrder = () => {
     },
   ];
 
-  const handleSubmit = (data: Orders) => {
-    console.log("Order Submitted:", data);
+  const handleSubmit = async (data: Orders) => {
+    const transformedData = {
+      ...data,
+      quantity: parseInt(data.quantity as string, 10),
+      isDeleted: false,
+    };
+
+    const cleanedData = Object.fromEntries(
+      Object.entries(transformedData).filter(
+        ([_, value]) => value !== undefined
+      )
+    );
+
+    if (orderId > 0) {
+      await updateOrder({ id: orderId, updatedOrder: data });
+    } else {
+      await createOrder(cleanedData);
+    }
+    if (isCreateLoading || isUpdateLoading) {
+      router.back();
+    }
   };
 
   return {
     formFields,
     handleSubmit,
+    orderId,
+    orderData,
+    isLoading,
+    isCreateLoading,
   };
 };

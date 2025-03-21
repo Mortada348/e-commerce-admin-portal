@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm, FormProvider, DefaultValues } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Admin } from "@/objects/Admin";
 
 interface Field {
   name: string;
@@ -27,6 +30,8 @@ interface DataFormProps<T> {
   formFields: Field[];
   onSubmit: (data: T) => void;
   defaultValues?: Partial<T>;
+  isLoading?: boolean;
+  onEdit?: () => void; // Added isLoading as an optional prop
 }
 
 const DataForm = <T extends Record<string, any>>({
@@ -34,12 +39,36 @@ const DataForm = <T extends Record<string, any>>({
   formFields,
   onSubmit,
   defaultValues = {},
+  isLoading = false,
+  onEdit,
 }: DataFormProps<T>) => {
   const form = useForm<T>({
     mode: "onBlur",
     defaultValues: defaultValues as DefaultValues<T>,
   });
+
+  const { reset } = form;
+
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues as DefaultValues<T>);
+    }
+  }, [defaultValues, reset]);
+
   const router = useRouter();
+
+  if (isLoading) {
+    // Handle the loading state using Shadcn Skeleton loader
+    return (
+      <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6">
+        <Skeleton className="w-full h-6 mb-4" />
+        <Skeleton className="w-full h-6 mb-4" />
+        <Skeleton className="w-full h-12 mb-6" />
+        <Skeleton className="w-full h-10" />
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg space-y-6">
       <h1 className="text-3xl font-semibold text-center text-gray-800">
@@ -64,10 +93,6 @@ const DataForm = <T extends Record<string, any>>({
                       placeholder={field.placeholder}
                       className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                       {...inputField}
-                      {...form.register(
-                        field.name as any,
-                        field.validationRules
-                      )}
                     />
                   </FormControl>
                   {field.description && (

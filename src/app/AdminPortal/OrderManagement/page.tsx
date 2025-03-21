@@ -6,7 +6,7 @@ import { useOrderManagement } from "./useOrderManagement";
 import GridHeader from "@/app/components/GridHeader";
 
 const OrderManagement = () => {
-  const { orders, orderColumns, handleEditOrder, handleDeleteOrder } =
+  const { Orders, orderColumns, handleEditOrder, handleDeleteOrder } =
     useOrderManagement();
 
   return (
@@ -20,7 +20,7 @@ const OrderManagement = () => {
 
         <div className="border rounded-lg shadow-sm">
           <DataTable
-            data={orders}
+            data={Orders}
             columns={orderColumns}
             onEdit={handleEditOrder}
             onDelete={handleDeleteOrder}
