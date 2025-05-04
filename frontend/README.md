@@ -5,7 +5,7 @@ This project is an **admin portal** for managing an e-commerce website. It provi
 ## Features
 
 - Dashboard with key metrics
-- Product management (add, update, delete)
+- Product and Order management (add, update, delete)
 - User management 
 - Responsive UI with modern design
 
